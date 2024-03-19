@@ -61,7 +61,7 @@ dirs = {
 # figure making API - update from MVP Offset project
 mvp.hue_order.update(
     {
-        'num_loci' : ['500', '5000', '10000', '20000'],
+        'num_loci' : ['500', '5000', '10000'],
         'final_la_bin' : ['0.27 < LA ≤ 0.42', '0.42 < LA ≤ 0.58'],
         'source' : ['ind', 'pooled']
     }
@@ -85,7 +85,6 @@ boxplot_kwargs = mvp.boxplot_kwargs.copy()
 
 mvp.factor_names['num_loci'] = 'Number of loci'
 for factor in [500, 5000, 10000, 20000]:
-#     mvp.factor_names[factor] = factor
     mvp.factor_names[str(factor)] = str(factor)
 mvp.factor_names['0.27 < LA ≤ 0.42'] = '0.27 < LA ≤ 0.42'
 mvp.factor_names['0.42 < LA ≤ 0.58'] = '0.42 < LA ≤ 0.58'
@@ -93,7 +92,7 @@ mvp.factor_names['final_la_bin'] = 'Local Adaptation (ΔSA)'
 mvp.factor_names['ind'] = '$\it{GO}_{geno, ind}$' # 'Individual-level'
 mvp.factor_names['pooled'] = '$\it{GO}_{AF, pop}$' # 'Population-level'
 mvp.factor_names['ind-avg'] = '$\it{GO}_{geno, pop}$'
-mvp.factor_names['source'] = 'Genetic Source'
+mvp.factor_names['source'] = 'Workflow'
 factor_names = mvp.factor_names
 
 hline_kwargs = dict(linestyle='--', color='gainsboro', linewidth=1, zorder=0)
@@ -160,7 +159,7 @@ def process_performance_pkl(pkl, source=None):
 
 
 @timer
-def load_results(source=None):
+def load_results(source=None, ignore_20k=False):
     """Read in performance data created in ind and pooled notebooks.
     
     Parameters
@@ -168,6 +167,9 @@ def load_results(source=None):
     source : [None, str]
         retrieve performance data from both 'ind' and 'pooled' data (if `source is None`)
             otherwise, retrieve `source` (which is either 'ind' or 'pooled')
+    ignore_20k : bool
+        whether to remove records from models trained using 20k loci (not all ind-level
+            jobs finished, so comparing ind- to pop- would exclude some simulation levels
 
     Notes
     -----
@@ -183,37 +185,34 @@ def load_results(source=None):
         assert source in ['ind', 'pooled']
         sources = [source]
 
+    if ignore_20k is True:
+        print(ColorText('removing records for models using 20k loci').warn())
+    elif ignore_20k is False:
+        print(ColorText('keeping records for models using 20k loci').warn())
+
     dfs = []
     for source in sources:
-        df = pd.read_table(f'{resdir}/{source}_performance.txt')
+        df = pd.read_table(f'{resdir}/{source}_performance.txt').astype({'num_loci' : int})
         df['source'] = source
         df['offset_level'] = df[combo_cols].apply(lambda x: '_'.join(x.astype(str)), axis=1)
+
+        if ignore_20k is True:
+            df = df[df.num_loci != 20_000]
 
         print(f'{source} shape = {df.shape}')
 
         dfs.append(df)
 
-#     df_ind = pd.read_table(f'{resdir}/ind_performance.txt')
-#     df_ind['source'] = 'ind'
-#     df_ind['offset_level'] = df_ind[combo_cols].apply(lambda x: '_'.join(x.astype(str)), axis=1)
+    results = pd.concat(dfs).reset_index(drop=True)
 
-#     df_pooled = pd.read_table(f'{resdir}/pooled_performance.txt')
-#     df_pooled['source'] = 'pooled'
-#     df_pooled['offset_level'] = df_pooled[combo_cols].apply(lambda x: '_'.join(x.astype(str)), axis=1)
-
-#     print('ind shape = ', df_ind.shape)
-#     print('pooled shaped = ', df_pooled.shape)
-
-#     results = pd.concat([df_ind, df_pooled])
-
-    results = pd.concat(dfs)
-    
     results['seed_garden'] = results.seed.astype(str) + '_' + results.garden.astype(str)
-    
-    results['final_la_bin'] = results.final_LA.apply(lambda x: '0.27 < LA ≤ 0.42' if x <= 0.42 else '0.42 < LA ≤ 0.58')
-    
+
+    results['final_la_bin'] = results.final_LA.apply(lambda la: '0.27 < LA ≤ 0.42' if la <= 0.42 else '0.42 < LA ≤ 0.58')
+
     results['num_loci'] = results.num_loci.astype(int).astype(str)
     
+    results.index = results[['seed', 'garden', 'num_loci']].apply(lambda x: '_'.join(x.astype(str)), axis=1)
+
     return results
 
 
