@@ -8,7 +8,7 @@ from pythonimports import *  # http://github.com/brandonlind/pythonimports
 
 import MVP_summary_functions as mvp  # http://github.com/ModelValidationProgram/MVP-offsets
 
-plt.rcParams.update({'font.family' : 'serif'})
+plt.rcParams.update({'font.family' : 'serif', 'mathtext.default': 'regular'})
 
 
 # navigation
@@ -63,7 +63,8 @@ mvp.hue_order.update(
     {
         'num_loci' : ['500', '5000', '10000'],
         'final_la_bin' : ['0.27 < LA ≤ 0.42', '0.42 < LA ≤ 0.58'],
-        'source' : ['ind', 'pooled']
+        'source' : ['ind', 'pooled'],
+        'model' : ['geno-model', 'af-model']
     }
 )
 hue_order = mvp.hue_order.copy()
@@ -78,7 +79,9 @@ mvp.boxplot_kwargs['palette'].update(
         '0.27 < LA ≤ 0.42': (0.8892638312853967, 0.8490264305563623, 0.7570511784894085),
         '0.42 < LA ≤ 0.58': (0.6779472567428826, 0.4089021118923688, 0.5211323732841375),
         'ind' : 'cornflowerblue',
-        'pooled' : 'navy'
+        'pooled' : 'navy',
+        'geno-model' : 'cornflowerblue',
+        'af-model' : 'navy'
     }
 )
 boxplot_kwargs = mvp.boxplot_kwargs.copy()
@@ -92,7 +95,11 @@ mvp.factor_names['final_la_bin'] = 'Local Adaptation (ΔSA)'
 mvp.factor_names['ind'] = '$\it{GO}_{geno, ind}$' # 'Individual-level'
 mvp.factor_names['pooled'] = '$\it{GO}_{AF, pop}$' # 'Population-level'
 mvp.factor_names['ind-avg'] = '$\it{GO}_{geno, pop}$'
+mvp.factor_names['af-ind'] = '$\it{GO}_{AF, ind}$'
+mvp.factor_names['geno-model'] = '$\it{GF}$' + '$_{geno}$'
+mvp.factor_names['af-model'] = '$\it{GF}$' + '$_{AF}$'
 mvp.factor_names['source'] = 'Workflow'
+mvp.factor_names['model'] = 'Workflow'
 factor_names = mvp.factor_names
 
 hline_kwargs = dict(linestyle='--', color='gainsboro', linewidth=1, zorder=0)
