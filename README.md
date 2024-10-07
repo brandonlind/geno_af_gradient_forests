@@ -6,9 +6,19 @@ Accelerating land use and climate change threaten to disrupt relationships betwe
 
 This research was funded by NSF-2043905 (KEL) and Northeastern University.
 
+# Citation
+
+Lind & Lotterhos (2024) A comparison of genomic forecasts based on genotypes versus allele frequencies.
+
+contact information:
+
+Brandon Lind - lind dot brandon dot m (at) gmail dot com
+
+Katie Lotterhos - k dot lotterhos (at) northeastern dot edu
+
 # Conda environments
 
-Conda environments are the the same as that used in [Lind & Lotterhos (2024)](https://github.com/brandonlind/mvp-offsets). Specifically, we used the mvp_env.yml and r35.yml environments.
+Conda environments are the the same as that used in [Lind & Lotterhos (2024)](https://github.com/brandonlind/mvp-offsets). Specifically, we used the mvp_env.yml and r35.yml environments. Package and coding versions are available at the top of the notebooks described below. Data used to train models has been [archived previously](https://doi.org/10.26008/1912/bco-dmo.889769.1).
 
 # Code Descriptions
 
