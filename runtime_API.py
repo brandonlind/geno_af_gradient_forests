@@ -183,6 +183,8 @@ def load_results(source=None, ignore_20k=False):
     used in:
         01_individual_runs/03_gather_individual_scores.ipynb
         02_pooled_runs/03_gather_pooled_scores.ipynb
+    re: Archived data
+	The datasets that are loaded (ind_performance.txt, pooled_performance.txt) are in the archive's /data folder.
     """
     combo_cols = ['simulation_level', 'rep', 'num_loci', 'garden']
 
