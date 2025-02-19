@@ -22,11 +22,36 @@ Katie Lotterhos - k dot lotterhos (at) northeastern dot edu
 
 Conda environments are the the same as that used in [Lind & Lotterhos (2024)](https://github.com/brandonlind/mvp-offsets). Specifically, we used the mvp_env.yml and r35.yml environments. Package and coding versions are available at the top of the notebooks described below. Data used to train models has been [archived previously](https://doi.org/10.26008/1912/bco-dmo.889769.1).
 
+# Raw data
+
+- Spatially discrete simulation output files that were formatted for GF training here are archived at [https://www.bco-dmo.org/data-set/889769](https://www.bco-dmo.org/dataset/889769)
+- Spatially continuous simulation output files that were formatted for GF training here are archived at [available here](https://marineomics.github.io/RDAtraitPredictionTutorial.html).
+
+# Evaluation results
+
+The main results of our manuscript are available in tab-delimited format in the `/data` directory in gzip format. Files are separated by the spatially continuous or spatially discrete subdirectories. Column and entry metadata are described for each file in the [`/data/REAMDE.md`](/data)
+
+- data/spatially_continuous/validation.txt.gz
+    - evaluation results for the continuous space simulation. This includes results from both individual-level environmental training data $GF_{geno, ind}(ind-env)$, as well as population-level environmental training data, $GF_{geno, ind}(pop-env)$
+    - this file was created and saved in [07_continuous_space_sims/02_validate_continuous_sims_offset.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/02_validate_continuous_sims_offset.ipynb)
+- data/spatially_discrete/af_ind/af_ind_results.txt.gz
+    - evaluation results for the spatially discrete evaluation using allele frequencies and individual-level fitnesses, $GF_{AF, ind}$
+    - this file was created and saved in [06_calc_af_ind/00_af_ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/06_calc_af_ind/00_af_ind_performance.ipynb)
+- data/spatially_discrete/af_pop/pooled_performance.txt.gz
+    - evaluation results for the spatially discrete evaluation using allele frequencies and population-mean fitnesses, $GF_{AF, pop}$
+    - this file was created and saved in [02_pooled_runs/03_gather_pooled_scores.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/02_pooled_runs/03_gather_pooled_scores.ipynb)
+- data/spatially_discrete/geno_ind/ind-averaged_results.txt.gz
+    - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, ind}$
+    - this file was created and saved in [03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb)
+- data/spatially_discrete/geno_pop/ind-averaged_results.txt.gz
+    - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, pop}$
+    - this file was created and saved in [01_individual_runs/03_gather_individual_scores.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/01_individual_runs/03_gather_individual_scores.ipynb)
+
 # Code Descriptions
 
-`runtime_API.py` - this file is imported into many of the notebooks and used to load data, metadata, and arguments for making figures.
+`runtime_API.py` - this file is imported into many of the notebooks and used to load data, metadata, and arguments for making figures and nesting results within notebooks. Functions are described in each functions' docstring found in the file.
 
-Below are the descriptions of notebooks in this repo. Notebooks can be viewed in the repository but are best viewed at https://nbviewer.jupyter.org (hyperlinks below).
+Below are the descriptions of notebooks in this repo. Notebooks were used to carry out the formatting of data and main results of this manuscript. Notebooks can be viewed in the repository but are best viewed at https://nbviewer.jupyter.org (hyperlinks below).
 
 ### 00_create_datasets
 [00_set_up_loci_sets](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/00_create_datasets/00_set_up_loci_sets.ipynb)
@@ -67,7 +92,7 @@ gather scores from pooled runs for the runtime project
 
 Calculate performance at the individual level using genotype models
 
-[00_calc_ind-averaged_performance](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_ind-averaged_performance.ipynb)
+[00_calc_ind-averaged_performance](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb)
 
 see how averaging across individuals affects perceived performance.
 
@@ -126,6 +151,26 @@ Calulate performance at the individual level using allele frequency models
 
 [00_af_ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/06_calc_af_ind/00_af_ind_performance.ipynb)
 
+### 07_continuous_space_sims
+
+Set up datasets from the continuous space simulation for GF evaluation.
+
+[00_train_GF_ind-level_envs_and_pop-level_envs.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/00_train_GF_ind-level_envs_and_pop-level_envs.ipynb)
+
+set up the files that will be used to train gradientForests where the individuals of the same 'population' are not all assigned the same environmental values
+submit GF training jobs
+
+[01_estimate_fitness.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/01_estimate_fitness.ipynb)
+
+estimate fitness of individuals in the common garden on the spatially continuous simulation landscape
+
+[02_validate_continuous_sims_offset.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/02_validate_continuous_sims_offset.ipynb)
+
+validate (calculate kendall's tau) between off set and fitness in the common gardens on the spatially continuous landscape
+
+[03_env_PCA_map.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/03_env_PCA_map.ipynb)
+
+create figure of environmental values for continuous space simulation by color-coding the loadings of the first three principal component axes of PCA-transformed environmental values.
 
 ---
 
