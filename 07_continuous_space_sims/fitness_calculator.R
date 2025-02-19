@@ -1,18 +1,11 @@
 #------------------------------------------------------------------------------------------------#
-# Calculate fitness for all populations to a garden environment with temp optimimum 
-#        `opt1` and env2 optimum `opt0`.
-#
-# Notes
-# -----
-# - this file was updated to calculate individual-level fitness, instead of pop-mean
-# - this file was original from Lind & Lotterhos 2024 Mol Ecol Res 
-# - only include environmental optima (eg opt0, opt1) if they are underlying selection
-# - validated in 02.04.00 of Lind & Lotterhos 2024 Mol Ecol Res 
+# Calculate fitness for all populations to a garden environment with the six optima from
+#    continuous space simulations.
 #
 # Usage
 # -----
 # conda activate MVP_env_R4.0.3
-# Rscript MVP_climate_outlier_fitness_calculator.R seed output_file opt0 opt1 opt2 opt3 opt4 opt5
+# Rscript fitness_calculator.R seed output_file opt0 opt1 opt2 opt3 opt4 opt5
 # 
 # Parameters
 # ----------
@@ -24,6 +17,12 @@
 # opt3 - PDM
 # opt4 - PwarmQ
 # opt5 - PWM
+#
+# Notes
+# -----
+# `individual_data.txt` is available in the tutorial from Lotterhos 2023 doi: 10.1073/pnas.2220313120
+#	the original data, formatted and edited in 07_continuous_space_sims/00_train_GF_ind-level_envs_and_pop-level_envs.ipynb,
+#	can be found here:  https://marineomics.github.io/RDAtraitPredictionTutorial.html
 # 
 #------------------------------------------------------------------------------------------------#
 library('mvtnorm')
