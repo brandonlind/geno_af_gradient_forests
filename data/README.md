@@ -21,7 +21,7 @@ All of the following columns are found within the .txt.gz files found within spa
 |:-----------------|:--------|:---|
 | garden           | int64   | garden ID on the landscape {1..100} |
 | score            | float64 | kendall's tau performance |
-| final_LA         | float64 | $LA_\Delta SA$ - the degree of local adaptation in the meta population |
+| final_LA         | float64 | $LA_{\Delta SA}$ - the degree of local adaptation in the meta population |
 | glevel           | object  | polygenicity level (['highly-polygenic', 'mod-polygenic', 'oligogenic']) |
 | plevel           | object  | number of traits under selection (['2-trait']) |
 | pleio            | object  | pleiotropy (['no pleiotropy', 'pleiotropy']) |
