@@ -44,10 +44,10 @@ The main results of our manuscript are available in gzip, tab-delimited format i
 - data/spatially_discrete/geno_ind/ind-averaged_results.txt.gz
     - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, ind}$
     - this file was created and saved in [03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb)
-    - within notebooks this file is often loaded, concatenated with `pooled_performance.txt`, via the `runtime_API.load_results` function.
 - data/spatially_discrete/geno_pop/ind_performance.txt.gz
     - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, pop}$
     - this file was created and saved in [01_individual_runs/03_gather_individual_scores.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/01_individual_runs/03_gather_individual_scores.ipynb)
+    - within notebooks this file is often loaded, concatenated with `pooled_performance.txt`, via the `runtime_API.load_results` function.
 
 # Code Descriptions
 
