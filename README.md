@@ -10,9 +10,13 @@ This research was funded by NSF-2043905 (KEL) and Northeastern University.
 
 # Citation
 
-Lind & Lotterhos (2024) A comparison of genomic forecasts based on genotypes versus allele frequencies.
+Manuscript:
+Lind & Lotterhos (2025) A comparison of genomic forecasts based on genotypes versus allele frequencies. <i> The American Naturalist</i>.
 
-contact information:
+Archive:
+Lind (2025) GitHub.com/brandonlind/geno_af_gradient_forests. Revision release (v1.0.1). Zenodo.
+
+# contact information:
 
 Brandon Lind - lind dot brandon dot m (at) gmail dot com
 
