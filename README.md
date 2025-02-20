@@ -29,7 +29,7 @@ Conda environments are the the same as that used in [Lind & Lotterhos (2024)](ht
 
 # Evaluation results
 
-The main results of our manuscript are available in tab-delimited format in the `/data` directory in gzip format. Files are separated by the spatially continuous or spatially discrete subdirectories. Column and entry metadata are described for each file in the [`/data/REAMDE.md`](/data)
+The main results of our manuscript are available in gzip, tab-delimited format in the `/data` directory. Files are separated by the spatially continuous or spatially discrete subdirectories. Column and entry metadata are described for each file in the [`/data/REAMDE.md`](/data)
 
 - data/spatially_continuous/validation.txt.gz
     - evaluation results for the continuous space simulation. This includes results from both individual-level environmental training data $GF_{geno, ind}(ind-env)$, as well as population-level environmental training data, $GF_{geno, ind}(pop-env)$
@@ -40,26 +40,28 @@ The main results of our manuscript are available in tab-delimited format in the 
 - data/spatially_discrete/af_pop/pooled_performance.txt.gz
     - evaluation results for the spatially discrete evaluation using allele frequencies and population-mean fitnesses, $GF_{AF, pop}$
     - this file was created and saved in [02_pooled_runs/03_gather_pooled_scores.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/02_pooled_runs/03_gather_pooled_scores.ipynb)
+    - within notebooks this file is often loaded, concatenated with `ind-averaged_results.txt`, via the `runtime_API.load_results` function.
 - data/spatially_discrete/geno_ind/ind-averaged_results.txt.gz
     - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, ind}$
     - this file was created and saved in [03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb)
-- data/spatially_discrete/geno_pop/ind-averaged_results.txt.gz
+    - within notebooks this file is often loaded, concatenated with `pooled_performance.txt`, via the `runtime_API.load_results` function.
+- data/spatially_discrete/geno_pop/ind_performance.txt.gz
     - evaluation results for the spatially discrete evaluation using individual genotypes and individual-level fitnesses, $GF_{geno, pop}$
     - this file was created and saved in [01_individual_runs/03_gather_individual_scores.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/01_individual_runs/03_gather_individual_scores.ipynb)
 
 # Code Descriptions
 
-`runtime_API.py` - this file is imported into many of the notebooks and used to load data, metadata, and arguments for making figures and nesting results within notebooks. Functions are described in each functions' docstring found in the file.
+`runtime_API.py` - this file is imported into many of the notebooks and used to load data, metadata, and arguments for making figures and nesting results within data objects. Functions are described in each functions' docstring found in this file. In some ways, this can be considered a configuration file for the notebook scripts.
 
 Below are the descriptions of notebooks in this repo. Notebooks were used to carry out the formatting of data and main results of this manuscript. Notebooks can be viewed in the repository but are best viewed at https://nbviewer.jupyter.org (hyperlinks below).
 
 ### 00_create_datasets
 [00_set_up_loci_sets](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/00_create_datasets/00_set_up_loci_sets.ipynb)
 
-create random sets of SNP files for 3 reps from each of 225 simulation seeds
+create random sets of SNP files for 3 reps from each of 225 simulation seeds (only 3 reps of 180 simulation levels are analyzed, these are filtered out in `03_gather_individual_scores`)
 
 ### 01_individual_runs
-Train GF models using genotypes, calculate performance at the individual level.
+Train and evaluate $GF_{geno, pop}$ models
 
 [01_kick_off_individual_GF_runs](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/01_individual_runs/01_kick_off_individual_GF_runs.ipynb)
 
@@ -74,7 +76,7 @@ check on currently submitted jobs for genotype runs and resubmit any jobs that f
 gather performance scores from geno runs into one object
 
 ### 02_pooled_runs
-Train GF models using allele frequencies, calculate performance of models at the population level
+Train and evaluate $GF_{AF, pop}$
 
 [01_kick_off_pooled_GF_runs](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/02_pooled_runs/01_kick_off_pooled_GF_runs.ipynb)
 
@@ -90,7 +92,7 @@ gather scores from pooled runs for the runtime project
 
 ### 03_calculate_geno-ind_performance
 
-Calculate performance at the individual level using genotype models
+Calculate $GF_{geno, ind}$ performance at the individual level using genotype models from 01_individual_runs
 
 [00_calc_ind-averaged_performance](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/03_calculate_geno-ind_performance/00_calc_geno-ind_performance.ipynb)
 
@@ -102,18 +104,18 @@ Answer main questions outlined in the manuscript.
 
 [01_Q1_effect_of_marker_set_size](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/04_main_questions/01_Q1_effect_of_marker_set_size.ipynb)
 
-Answer Q1 of the manuscript: How does the number of markers used as input affect performance across population- and individual-level datasets?
+Answer Q1 of the manuscript: How does the number of markers used as input affect performance?
 
 [02_Q2_Q3_effect_of_genetic_source](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/04_main_questions/02_Q2_Q3_effect_of_genetic_source.ipynb)
 
 Answer Q2 and Q3 of the manuscript:
   Q2 How does the format of evaluation data affect performance?
-  Q3 How does the format of the training data affect model performance?
+  Q3 How does the format of the genetic training data affect performance?
 
 
-[03_Q4_computational_requirements](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/04_main_questions/03_Q4_computational_requirements.ipynb)
+[03_Q5_computational_requirements](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/04_main_questions/03_Q5_computational_requirements.ipynb)
 
-Answer Q4 from the manuscript: How does the size of the dataset affect computational time and memory requirements?
+Answer Q5 from the manuscript: How does the size of the dataset affect computational time and memory requirements?
 
 ### 05_supplemental
 
@@ -123,7 +125,7 @@ why do GF runs using 500 markers do about as well as runs using 10k-20k markers?
 
 [03_all_compare_workflows](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/05_supplement/03_all_compare_workflows.ipynb)
 
-see which datasets differed the most between AF and genotype data
+see which datasets differed the most between AF and genotype models
 
 [04_check_overlap_of_loci](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/05_supplement/04_check_overlap_of_loci.ipynb)
 
@@ -131,7 +133,7 @@ check the overlap of loci used by *GO<sub>geno,ind</sub>* and *GO<sub>AF,pop</su
 
 [05_explore_r2_geno_ind_loci](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/05_supplement/05_explore_r2_geno_ind_loci.ipynb)
 
-explore differences in R2 from loci used by GF_geno models but not GF_AF models
+explore differences in R2 from loci used by $GF_{geno}$ models but not $GF_{AF}$ models
 
 [06_determine_levels_of_failed_replicates](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/05_supplement/06_determine_levels_of_failed_replicates.ipynb)
 
@@ -147,13 +149,13 @@ recreate the environmental figures from Lotterhos 2023
 
 ### 06_calc_af_ind
 
-Calulate performance at the individual level using allele frequency models
+Calulate $GF_{AF, ind}$ performance
 
 [00_af_ind_performance.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/06_calc_af_ind/00_af_ind_performance.ipynb)
 
 ### 07_continuous_space_sims
 
-Set up datasets from the continuous space simulation for GF evaluation.
+Set up datasets from the continuous space simulation for GF evaluation: $GF_{geno, ind(ind-env)}$ and $GF_{geno, ind(pop-env)}$
 
 [00_train_GF_ind-level_envs_and_pop-level_envs.ipynb](https://nbviewer.org/github/brandonlind/geno_af_gradient_forests/blob/main/07_continuous_space_sims/00_train_GF_ind-level_envs_and_pop-level_envs.ipynb)
 
