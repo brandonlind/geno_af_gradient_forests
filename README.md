@@ -1,4 +1,4 @@
-[![DOI](https://zenodo.org/badge/756374985.svg)](https://doi.org/10.5281/zenodo.13899117)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14946219.svg)](https://doi.org/10.5281/zenodo.14946219)
 
 # A comparison of genomic forecasts based on genotypes versus allele frequencies
 
@@ -14,7 +14,7 @@ Manuscript:
 Lind & Lotterhos (2025) A comparison of genomic forecasts based on genotypes versus allele frequencies. <i> The American Naturalist</i>.
 
 Archive:
-Lind (2025) GitHub.com/brandonlind/geno_af_gradient_forests. Revision release (v1.0.1). Zenodo.
+Lind (2025) GitHub.com/brandonlind/geno_af_gradient_forests. Revision release (v1.1.0). Zenodo. https://doi.org/10.5281/zenodo.14946219
 
 # contact information:
 
